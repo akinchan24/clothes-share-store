@@ -1,0 +1,81 @@
+You are an expert web developer. Build me a **production-ready, responsive webapp frontend** using **HTML, CSS, and vanilla JavaScript only** (no frameworks). The app is for a platform where people can **donate or resell clothes**. Use a **dark theme with unique neon accent colors, hover animations, modern typography, and responsive layouts**.
+
+### Pages & Features
+
+1. **Landing Page**
+   - Dark hero section with heading: "Donate or Buy Clothes Easily"
+   - Call-to-action buttons: "Donate Clothes" | "Shop Clothes" | "NGO Join"
+   - Smooth hover animations and scrolling transitions.
+   - Sticky navbar with logo + navigation links.
+
+2. **Authentication Page**
+   - Single **Sign Up / Login page** with:
+     - Dropdown to choose role: Donor, Customer, NGO.
+     - Toggle between Sign Up and Login forms.
+     - Stylish glassmorphism form with validation (JS only).
+   - After signup, user role stored in localStorage for now.
+
+3. **Donor Dashboard**
+   - Form to upload **clothes details**:
+     - Multiple image/video upload (UI preview only, no backend).
+     - Fields: Item Name, Size, Type, Gender, Condition, Expected Price (auto-suggest 1/4 of real price).
+     - Option to mark item as "Free for NGO Pickup".
+   - Show submitted items in a **card preview grid** with pending status.
+
+4. **Customer Dashboard**
+   - Product listing grid (use sample mock data for now).
+   - Filters (Size, Gender, Type) using dropdowns.
+   - Each product card should show:
+     - Item image slider (basic JS image carousel).
+     - Price breakdown: Donor Price + Platform Fee + Delivery Fee.
+   - "Add to Cart" button → items appear in **Cart Page**.
+   - Cart page with order summary and total calculation.
+
+5. **NGO Dashboard**
+   - Form to send details for verification:
+     - NGO Name, Contact Person, Phone, Email, Address.
+   - Display "Pending approval from admin" message until approved.
+
+6. **Admin Portal**
+   - Accessible via a **different URL** (example: `/admin.html`).
+   - Admin Login form (UI only).
+   - Admin Dashboard:
+     - View donor uploads (with all details & images/videos).
+     - Buttons to Approve/Reject items.
+     - Manage NGO requests → Approve/Reject.
+   - Only approved items should appear on customer marketplace.
+
+### UI & Design
+- Dark background with neon accents (teal, purple, cyan).
+- Unique hover effects (glowing borders, scaling cards).
+- Responsive layouts:
+  - Mobile → stacked layout
+  - Tablet → two-column
+  - Desktop → grid with side navigation
+- CSS Animations + JavaScript interactions (fade-in, slide-up, hover effects).
+- Use **CSS Flexbox & Grid** for responsiveness.
+- Use custom Google Fonts.
+
+### Tech Stack
+- **HTML5** for structure
+- **CSS3** (Flexbox, Grid, Animations, Transitions, Media Queries)
+- **JavaScript (ES6)** for interactivity (form handling, localStorage, mock product listing, cart updates, role-based navigation)
+
+### Folder Structure
+- `/index.html` → Landing Page
+- `/auth.html` → Sign Up / Login
+- `/donor.html` → Donor Dashboard
+- `/customer.html` → Customer Dashboard + Cart
+- `/ngo.html` → NGO Dashboard
+- `/admin.html` → Admin Portal
+- `/css/style.css` → Global styles
+- `/js/main.js` → Common scripts (auth, role handling, cart, filters)
+- `/assets/` → Placeholder images/videos
+
+### Notes
+- Use **localStorage** for temporary data (user role, cart items, uploaded items).
+- Add dummy data for product listings and NGO requests.
+- Keep code **clean, modular, and commented**.
+- Focus on making it **look professional, unique, and fully responsive**.
+
+Now generate the **complete codebase** (all HTML, CSS, and JS files) for this webapp.

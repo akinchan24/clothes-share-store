@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Dashboard - ClothesShare</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Navigation -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <button class="sidebar-toggle" id="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-tshirt"></i>
+                    <span>ClothesShare</span>
+                </a>
+            </div>
+            <div class="nav-user">
+                <span class="user-welcome">Welcome, <span id="user-name">NGO</span></span>
+                <button class="btn btn-outline btn-sm logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar" id="dashboard-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-tshirt"></i>
+                    <span>ClothesShare</span>
+                </div>
+                <button class="sidebar-close" id="sidebar-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#verification" class="sidebar-link active" data-section="verification">
+                    <i class="fas fa-certificate"></i>
+                    <span>Verification</span>
+                </a>
+                <a href="#available-items" class="sidebar-link" data-section="available-items">
+                    <i class="fas fa-box-open"></i>
+                    <span>Available Items</span>
+                </a>
+                <a href="#collected" class="sidebar-link" data-section="collected">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>Collected Items</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Verification Section -->
+            <section id="verification-section" class="dashboard-section active">
+                <div class="section-header">
+                    <h2>NGO Verification</h2>
+                    <p>Submit your details for verification to access free donations</p>
+                </div>
+
+                <div class="verification-status" id="verification-status">
+                    <!-- Status will be loaded here -->
+                </div>
+
+                <form class="verification-form" id="ngo-verification-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ngo-name">NGO Name *</label>
+                            <input type="text" id="ngo-name" name="ngoName" required placeholder="Enter your NGO name">
+                        </div>
+                        <div class="form-group">
+                            <label for="registration-number">Registration Number *</label>
+                            <input type="text" id="registration-number" name="registrationNumber" required placeholder="NGO registration number">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contact-person">Contact Person *</label>
+                            <input type="text" id="contact-person" name="contactPerson" required placeholder="Full name of contact person">
+                        </div>
+                        <div class="form-group">
+                            <label for="designation">Designation *</label>
+                            <input type="text" id="designation" name="designation" required placeholder="e.g., Director, Coordinator">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ngo-phone">Phone Number *</label>
+                            <input type="tel" id="ngo-phone" name="phone" required placeholder="+91 9876543210">
+                        </div>
+                        <div class="form-group">
+                            <label for="ngo-email">Email Address *</label>
+                            <input type="email" id="ngo-email" name="email" required placeholder="contact@ngoname.org">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ngo-address">Complete Address *</label>
+                        <textarea id="ngo-address" name="address" rows="3" required placeholder="Enter complete address with pincode"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service-areas">Service Areas *</label>
+                        <input type="text" id="service-areas" name="serviceAreas" required placeholder="e.g., Mumbai, Thane, Navi Mumbai">
+                        <small>Areas where you can collect donations (comma-separated)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ngo-description">About Your NGO *</label>
+                        <textarea id="ngo-description" name="description" rows="4" required placeholder="Brief description of your NGO's work and mission"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="website">Website (Optional)</label>
+                        <input type="url" id="website" name="website" placeholder="https://www.yourngo.org">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Document Upload</label>
+                        <div class="upload-area small" id="document-upload-area">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-file-upload"></i>
+                                <p>Upload NGO certificates/documents</p>
+                                <span class="upload-note">PDF, DOC, or images (Max 5MB each)</span>
+                            </div>
+                            <input type="file" id="document-input" multiple accept=".pdf,.doc,.docx,image/*" hidden>
+                        </div>
+                        <div class="document-preview" id="document-preview"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit for Verification
+                    </button>
+                </form>
+            </section>
+
+            <!-- Available Items Section -->
+            <section id="available-items-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Available Donations</h2>
+                    <p>Items marked for free pickup by NGOs</p>
+                </div>
+
+                <div class="ngo-notice" id="ngo-notice">
+                    <div class="notice-content">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <h4>Verification Required</h4>
+                            <p>Complete your NGO verification to access free donations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="donations-grid" id="donations-grid">
+                    <!-- Available donations will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Collected Items Section -->
+            <section id="collected-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Collected Items</h2>
+                    <p>Track items you've collected for your NGO</p>
+                </div>
+
+                <div class="collected-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-collected">0</h3>
+                            <p>Total Items Collected</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-month"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="this-month">0</h3>
+                            <p>This Month</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="people-helped">0</h3>
+                            <p>People Helped</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="collected-items" id="collected-items">
+                    <div class="empty-state">
+                        <i class="fas fa-hands-helping"></i>
+                        <h3>No items collected yet</h3>
+                        <p>Your collected donations will appear here</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script>
+        // Initialize NGO dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth('ngo');
+            initNGODashboard();
+        });
+    </script>
+</body>
+</html>

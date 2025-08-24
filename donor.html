@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Dashboard - ClothesShare</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Navigation -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <button class="sidebar-toggle" id="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-tshirt"></i>
+                    <span>ClothesShare</span>
+                </a>
+            </div>
+            <div class="nav-user">
+                <span class="user-welcome">Welcome, <span id="user-name">Donor</span></span>
+                <button class="btn btn-outline btn-sm logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar" id="dashboard-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-tshirt"></i>
+                    <span>ClothesShare</span>
+                </div>
+                <button class="sidebar-close" id="sidebar-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#upload" class="sidebar-link active" data-section="upload">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Upload Clothes</span>
+                </a>
+                <a href="#my-items" class="sidebar-link" data-section="my-items">
+                    <i class="fas fa-box"></i>
+                    <span>My Items</span>
+                </a>
+                <a href="#analytics" class="sidebar-link" data-section="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Upload Section -->
+            <section id="upload-section" class="dashboard-section active">
+                <div class="section-header">
+                    <h2>Upload Clothes</h2>
+                    <p>Share your pre-loved clothes with others</p>
+                </div>
+
+                <form class="upload-form" id="clothes-upload-form">
+                    <!-- Image Upload -->
+                    <div class="form-group image-upload-group">
+                        <label>Item Photos/Videos</label>
+                        <div class="upload-area" id="upload-area">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & drop images/videos here or <span class="upload-link">browse files</span></p>
+                                <span class="upload-note">Supports: JPG, PNG, MP4, MOV (Max 10MB each)</span>
+                            </div>
+                            <input type="file" id="file-input" multiple accept="image/*,video/*" hidden>
+                        </div>
+                        <div class="preview-container" id="preview-container"></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="item-name">Item Name *</label>
+                            <input type="text" id="item-name" name="itemName" required placeholder="e.g., Blue Denim Jacket">
+                        </div>
+                        <div class="form-group">
+                            <label for="item-type">Type *</label>
+                            <select id="item-type" name="itemType" required>
+                                <option value="">Select type</option>
+                                <option value="shirt">Shirt</option>
+                                <option value="pants">Pants</option>
+                                <option value="dress">Dress</option>
+                                <option value="jacket">Jacket</option>
+                                <option value="shoes">Shoes</option>
+                                <option value="accessories">Accessories</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="size">Size *</label>
+                            <select id="size" name="size" required>
+                                <option value="">Select size</option>
+                                <option value="XS">XS</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                                <option value="XXXL">XXXL</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender *</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="unisex">Unisex</option>
+                                <option value="kids">Kids</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="condition">Condition *</label>
+                        <select id="condition" name="condition" required>
+                            <option value="">Select condition</option>
+                            <option value="new">Brand New (with tags)</option>
+                            <option value="excellent">Excellent (like new)</option>
+                            <option value="good">Good (minor wear)</option>
+                            <option value="fair">Fair (visible wear)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="original-price">Original Price (₹) *</label>
+                        <input type="number" id="original-price" name="originalPrice" required placeholder="2000" min="0">
+                        <div class="price-suggestion">
+                            <span>Suggested selling price: ₹<span id="suggested-price">500</span></span>
+                            <small>(25% of original price)</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" rows="4" placeholder="Describe the item, brand, any special features..."></textarea>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="free-ngo" name="freeNgo">
+                            <span class="checkmark"></span>
+                            <span class="checkbox-text">Mark as free for NGO pickup</span>
+                        </label>
+                        <small>NGOs can collect this item for free to help those in need</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">
+                        <i class="fas fa-upload"></i>
+                        Upload Item
+                    </button>
+                </form>
+            </section>
+
+            <!-- My Items Section -->
+            <section id="my-items-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2>My Items</h2>
+                    <p>Track your uploaded items and their status</p>
+                </div>
+
+                <div class="items-grid" id="items-grid">
+                    <!-- Items will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Analytics</h2>
+                    <p>Your donation and sales statistics</p>
+                </div>
+
+                <div class="analytics-cards">
+                    <div class="analytics-card">
+                        <div class="analytics-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="analytics-content">
+                            <h3 id="total-items">0</h3>
+                            <p>Total Items</p>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="analytics-content">
+                            <h3 id="approved-items">0</h3>
+                            <p>Approved Items</p>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="analytics-content">
+                            <h3 id="free-items">0</h3>
+                            <p>Free for NGO</p>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="analytics-content">
+                            <h3 id="total-earnings">₹0</h3>
+                            <p>Total Earnings</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script>
+        // Initialize donor dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth('donor');
+            initDonorDashboard();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - ClothesShare</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page admin-page">
+    <!-- Navigation -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <button class="sidebar-toggle" id="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>ClothesShare Admin</span>
+                </a>
+            </div>
+            <div class="nav-user">
+                <span class="user-welcome">Admin Panel</span>
+                <button class="btn btn-outline btn-sm logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Login (shown when not authenticated) -->
+    <div class="admin-login" id="admin-login">
+        <div class="admin-login-card">
+            <div class="admin-header">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Admin Access</h2>
+                <p>Secure admin portal login</p>
+            </div>
+            <form class="admin-login-form" id="admin-login-form">
+                <div class="form-group">
+                    <label for="admin-username">Username</label>
+                    <input type="text" id="admin-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Access Admin Panel
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard (shown after authentication) -->
+    <div class="dashboard-container" id="admin-dashboard" style="display: none;">
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar" id="dashboard-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Admin</span>
+                </div>
+                <button class="sidebar-close" id="sidebar-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#overview" class="sidebar-link active" data-section="overview">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#pending-items" class="sidebar-link" data-section="pending-items">
+                    <i class="fas fa-clock"></i>
+                    <span>Pending Items</span>
+                    <span class="notification-badge" id="pending-count">0</span>
+                </a>
+                <a href="#ngo-requests" class="sidebar-link" data-section="ngo-requests">
+                    <i class="fas fa-users-cog"></i>
+                    <span>NGO Requests</span>
+                    <span class="notification-badge" id="ngo-requests-count">0</span>
+                </a>
+                <a href="#all-items" class="sidebar-link" data-section="all-items">
+                    <i class="fas fa-box"></i>
+                    <span>All Items</span>
+                </a>
+                <a href="#approved-ngos" class="sidebar-link" data-section="approved-ngos">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Approved NGOs</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Overview Section -->
+            <section id="overview-section" class="dashboard-section active">
+                <div class="section-header">
+                    <h2>Admin Overview</h2>
+                    <p>Platform statistics and recent activity</p>
+                </div>
+
+                <div class="admin-stats">
+                    <div class="admin-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-items-stat">0</h3>
+                            <p>Total Items</p>
+                            <span class="stat-change">+5 today</span>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="pending-items-stat">0</h3>
+                            <p>Pending Review</p>
+                            <span class="stat-change urgent">Needs attention</span>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-users-stat">0</h3>
+                            <p>Total Users</p>
+                            <span class="stat-change">+12 this week</span>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="ngos-stat">0</h3>
+                            <p>Active NGOs</p>
+                            <span class="stat-change">+2 new requests</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activity-list">
+                        <!-- Activity items will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pending Items Section -->
+            <section id="pending-items-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Pending Items Review</h2>
+                    <p>Review and approve/reject submitted items</p>
+                </div>
+
+                <div class="admin-items-grid" id="pending-items-grid">
+                    <!-- Pending items will be loaded here -->
+                </div>
+            </section>
+
+            <!-- NGO Requests Section -->
+            <section id="ngo-requests-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2>NGO Verification Requests</h2>
+                    <p>Review and approve NGO applications</p>
+                </div>
+
+                <div class="ngo-requests-list" id="ngo-requests-list">
+                    <!-- NGO requests will be loaded here -->
+                </div>
+            </section>
+
+            <!-- All Items Section -->
+            <section id="all-items-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2>All Items</h2>
+                    <div class="admin-filters">
+                        <select id="status-filter" onchange="filterItems()">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <select id="type-filter" onchange="filterItems()">
+                            <option value="">All Types</option>
+                            <option value="shirt">Shirt</option>
+                            <option value="pants">Pants</option>
+                            <option value="dress">Dress</option>
+                            <option value="jacket">Jacket</option>
+                            <option value="shoes">Shoes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="admin-items-table">
+                    <table class="items-table" id="all-items-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Donor</th>
+                                <th>Type</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="items-table-body">
+                            <!-- Items will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Approved NGOs Section -->
+            <section id="approved-ngos-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Approved NGOs</h2>
+                    <p>Manage verified NGO partners</p>
+                </div>
+
+                <div class="ngos-grid" id="approved-ngos-grid">
+                    <!-- Approved NGOs will be loaded here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Item Review Modal -->
+    <div class="modal" id="item-review-modal">
+        <div class="modal-content large">
+            <span class="modal-close" onclick="closeItemReviewModal()">&times;</span>
+            <div class="modal-body" id="item-review-body">
+                <!-- Item review content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script>
+        // Initialize admin dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initAdminPortal();
+        });
+    </script>
+</body>
+</html>

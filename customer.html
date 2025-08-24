@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - ClothesShare</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Navigation -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <button class="sidebar-toggle" id="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-tshirt"></i>
+                    <span>ClothesShare</span>
+                </a>
+            </div>
+            <div class="nav-user">
+                <button class="cart-btn" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-text">My Cart</span>
+                    <span class="cart-count" id="cart-count">0</span>
+                </button>
+                <span class="user-welcome">Welcome, <span id="user-name">Customer</span></span>
+                <button class="btn btn-outline btn-sm logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar" id="dashboard-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-tshirt"></i>
+                    <span>ClothesShare</span>
+                </div>
+                <button class="sidebar-close" id="sidebar-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#shop" class="sidebar-link active" data-section="shop">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Shop</span>
+                </a>
+                <a href="#orders" class="sidebar-link" data-section="orders">
+                    <i class="fas fa-receipt"></i>
+                    <span>My Orders</span>
+                </a>
+                <a href="#wishlist" class="sidebar-link" data-section="wishlist">
+                    <i class="fas fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-section">
+                <h3>Filters</h3>
+                <div class="filter-group">
+                    <label for="filter-type">Type</label>
+                    <select id="filter-type" onchange="applyFilters()">
+                        <option value="">All Types</option>
+                        <option value="shirt">Shirt</option>
+                        <option value="pants">Pants</option>
+                        <option value="dress">Dress</option>
+                        <option value="jacket">Jacket</option>
+                        <option value="shoes">Shoes</option>
+                        <option value="accessories">Accessories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-size">Size</label>
+                    <select id="filter-size" onchange="applyFilters()">
+                        <option value="">All Sizes</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-gender">Gender</label>
+                    <select id="filter-gender" onchange="applyFilters()">
+                        <option value="">All Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="unisex">Unisex</option>
+                        <option value="kids">Kids</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-price">Max Price (₹)</label>
+                    <input type="range" id="filter-price" min="0" max="5000" value="5000" onchange="applyFilters()">
+                    <span id="price-display">₹5000</span>
+                </div>
+                <button class="btn btn-outline btn-sm" onclick="clearFilters()">Clear Filters</button>
+            </div>
+        </aside>
+        
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Shop Section -->
+            <section id="shop-section" class="dashboard-section active">
+                <div class="section-header">
+                    <h2>Shop Pre-loved Clothes</h2>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search for clothes..." onkeyup="searchProducts()">
+                    </div>
+                </div>
+
+                <div class="products-grid" id="products-grid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="orders-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2>My Orders</h2>
+                    <p>Track your purchase history</p>
+                </div>
+                <div class="orders-list" id="orders-list">
+                    <div class="empty-state">
+                        <i class="fas fa-receipt"></i>
+                        <h3>No orders yet</h3>
+                        <p>Your purchase history will appear here</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Wishlist Section -->
+            <section id="wishlist-section" class="dashboard-section">
+                <div class="section-header">
+                    <h2>My Wishlist</h2>
+                    <p>Items you've saved for later</p>
+                </div>
+                <div class="wishlist-grid" id="wishlist-grid">
+                    <div class="empty-state">
+                        <i class="fas fa-heart"></i>
+                        <h3>Your wishlist is empty</h3>
+                        <p>Save items you love to buy them later</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="cart-close" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-content">
+            <div class="cart-items" id="cart-items">
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Your cart is empty</p>
+                </div>
+            </div>
+            <div class="cart-footer" id="cart-footer" style="display: none;">
+                <div class="cart-total">
+                    <div class="total-row">
+                        <span>Items Total:</span>
+                        <span id="items-total">₹0</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Platform Fee:</span>
+                        <span id="platform-fee">₹0</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Delivery Fee:</span>
+                        <span id="delivery-fee">₹50</span>
+                    </div>
+                    <div class="total-row final-total">
+                        <span>Total:</span>
+                        <span id="final-total">₹0</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-full" onclick="proceedToCheckout()">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeProductModal()">&times;</span>
+            <div class="modal-body" id="modal-body">
+                <!-- Product details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script>
+        // Initialize customer dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth('customer');
+            initCustomerDashboard();
+        });
+    </script>
+</body>
+</html>
